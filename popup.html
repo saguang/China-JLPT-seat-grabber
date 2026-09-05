@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>中国 JLPT 考位捡漏系统</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <h1>中国 JLPT 考位捡漏系统</h1>
+    <div id="status" class="status off">未运行</div>
+  </header>
+
+  <section>
+    <label>目标页面 URL 模式</label>
+    <input id="targetURL" type="text" placeholder="https://jlpt.neea.cn/index.do">
+    <small>含 <code>jlpt.neea.cn</code> 即可，支持通配符 <code>*</code></small>
+  </section>
+
+  <section class="grid2">
+    <div>
+      <label>刷新间隔（分钟）</label>
+      <input id="interval" type="number" min="1" value="1">
+    </div>
+    <div>
+      <label>匹配模式</label>
+      <select id="matchMode">
+        <option value="row-match">JLPT 表格·按考点定位</option>
+        <option value="include">文本包含关键字</option>
+        <option value="disabled-true">默认禁用 → 启用</option>
+        <option value="visible-clickable">元素可见且可点</option>
+      </select>
+    </div>
+  </section>
+
+  <section id="rowSection">
+    <label>目标考点名称（同一行内有该文字即锁定）</label>
+    <input id="targetKeyword" type="text" placeholder="例如：大连外国语大学 / 北京外国语大学">
+    <small>建议填你报的那个考点名称，避免误抢其它考点</small>
+  </section>
+
+  <section id="rowSection2">
+    <label>视为"有考位"的状态关键词</label>
+    <input id="statusKeyword" type="text" value="有名额">
+    <small>状态列出现这个词就触发；"名额暂满"则不会触发</small>
+  </section>
+
+  <section id="selectorSection">
+    <label>考位检测选择器（CSS）</label>
+    <input id="seatSelector" type="text" placeholder="#seat-status 或 .btn-book">
+    <small>非 JLPT 模式用：页面打开后按 F12 → Elements 复制目标元素选择器</small>
+  </section>
+
+  <section id="selectorSection2">
+    <label>匹配关键字（仅 include 模式生效）</label>
+    <input id="matchText" type="text" placeholder="例如：有考位 / 可预约 / 立即报名">
+  </section>
+
+  <section id="selectorSection3">
+    <label>抢报按钮选择器（可空）</label>
+    <input id="grabSelector" type="text" placeholder="#submit 或 button.btn-primary">
+  </section>
+
+  <section class="toggles">
+    <label class="check"><input type="checkbox" id="autoGrab"> 自动点击抢报按钮</label>
+    <label class="check"><input type="checkbox" id="playSound"> 发现考位时持续响铃（30秒+大音量）</label>
+    <label class="check"><input type="checkbox" id="flash"> 高亮考位元素</label>
+  </section>
+
+  <section class="actions">
+    <button id="start" class="primary">启动监控</button>
+    <button id="stop">停止</button>
+    <button id="test">立即检测一次</button>
+    <button id="silence" class="danger" hidden>🔕 立即停止提示音</button>
+  </section>
+
+  <section class="stats">
+    <div>上次刷新：<span id="lastTick">—</span></div>
+    <div>已检测：<span id="hitCount">0</span> 次命中</div>
+  </section>
+
+  <section id="logSection">
+    <div class="logTitle">检测结果</div>
+    <div id="logBox" class="logBox">点击「立即检测一次」查看结果</div>
+  </section>
+
+  <script src="popup.js"></script>
+</body>
+</html>

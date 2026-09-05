@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "中国 JLPT 考位捡漏系统",
+  "version": "1.0.0",
+  "description": "JLPT 中国大陆考场座位捡漏助手：自动刷新 NEEA 报名页，监控指定考点名额，发现空位立即三重报警（持续提示音 + 系统通知 + 语音朗读）。",
+  "default_locale": "zh_CN",
+  "permissions": [
+    "storage",
+    "alarms",
+    "notifications",
+    "tabs",
+    "scripting",
+    "tts"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "中国 JLPT 考位捡漏系统",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "minimum_chrome_version": "100"
+}
